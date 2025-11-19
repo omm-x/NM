@@ -1,0 +1,45 @@
+#include<stdio.h>
+#include<math.h>
+
+double f(double x){
+    return x*x*x-x-11;
+}
+void bisection(double a,double b,double epsilon,int maxIter){
+    if(f(a)*f(b)>=0){
+        printf("invalid interval");
+        return;
+    }
+    double c;
+    int iter=0;
+    printf("Iter\t a\t\t b\t\t c\t\t f(c)\n");
+    while(((b-a)/2.0)>epsilon && iter<maxIter){
+        c=(a+b)/2.0;
+        printf("%d\t%.6lf\t%.6lf\t%.6lf\t%.6lf\n", iter+1, a, b, c, f(c));
+
+        if(fabs(f(c)) <epsilon)
+        break;
+
+        if(f(c)*f(a)<0)
+        b=c;
+        else
+        a=c;
+        iter++;
+
+    }
+    printf("\nApprox Root=%.6lf after %d iterations\n",c,iter);
+}
+
+int main(){
+    double a,b,epsilon;
+    int maxIter;
+    printf("Enter the value of a= ");
+    scanf("%lf",&a);
+    printf("Enter the value of b= ");
+    scanf("%lf",&b);
+    printf("Enter epsilon ");
+    scanf("%lf",&epsilon);
+    printf("Enter maxium iteration= ");
+    scanf("%d",&maxIter);
+
+    bisection(a,b,epsilon,maxIter);
+}
