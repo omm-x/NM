@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <math.h>
+
+double func(double x){
+    return x*x*x + x+1.0;
+}
+
+double dfunc(double x){
+    return 3.0*x*x + 1.0;
+}
+
+int main(){
+    double x0, x1, f0, df0;
+    double c;
+    int n, i = 0;
+    printf("Enter x0= ");
+    scanf("%lf", &x0);
+
+    printf("Enter tolerance c=");
+    scanf("%lf", &c);
+
+    printf("Enter max iter n= ");
+    scanf("%d", &n);
+
+    printf("\nIter\t x\t\t f(x)\n");
+    printf("-----------------------------------\n");
+
+    do {
+        f0 = func(x0);
+        df0 =dfunc(x0);
+
+        printf("%d\t%.6f\t%.6f\n", i+1, x0, f0);
+
+        if (fabs(df0) < 1e-12) {
+            printf("Derivative near zero.Method fails.\n");
+            return 0;
+        }
+
+        x1 = x0-f0/df0;
+
+        i++;
+        if (fabs(x1-x0)<c||fabs(func(x1))<c) {
+            x0=x1;
+            break;
+        }
+
+        x0=x1;
+    } while (i < n);
+
+    printf("\nApprox root (rounded to 2 decimals)= %.4f\n", x0);
+    return 0;
+}
